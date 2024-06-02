@@ -1,0 +1,4 @@
+name: SleepPlugin
+version: '${project.version}'
+main: me.jameslloyd.sleepplugin.SleepPlugin
+api-version: '1.20'

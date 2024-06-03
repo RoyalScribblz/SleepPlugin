@@ -22,6 +22,7 @@ public class PlayerBedListener implements Listener {
 
         if ((double) playersInBed.size() / onlinePlayerCount >= 1.0 / 3.0) {
             player.getWorld().setTime(1000);
+            resetTimeSinceRest();
         }
     }
 
@@ -33,5 +34,14 @@ public class PlayerBedListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         playersInBed.remove(event.getPlayer().getUniqueId());
+    }
+
+    private void resetTimeSinceRest() {
+        for (UUID uuid : playersInBed) {
+            Player player = Bukkit.getPlayer(uuid);
+            if (player != null) {
+                player.setStatistic(Statistic.TIME_SINCE_REST, 0);
+            }
+        }
     }
 }

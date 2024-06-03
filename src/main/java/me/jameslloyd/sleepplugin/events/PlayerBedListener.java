@@ -1,6 +1,7 @@
 package me.jameslloyd.sleepplugin.events;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,6 +10,7 @@ import org.bukkit.event.player.PlayerBedLeaveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.UUID;
 
 public class PlayerBedListener implements Listener {
@@ -19,9 +21,16 @@ public class PlayerBedListener implements Listener {
         Player player = event.getPlayer();
         playersInBed.add(player.getUniqueId());
         int onlinePlayerCount = Bukkit.getOnlinePlayers().size();
-
+        
         if ((double) playersInBed.size() / onlinePlayerCount >= 1.0 / 3.0) {
             player.getWorld().setTime(1000);
+
+            List<Player> players = event.getPlayer().getWorld().getPlayers();
+            for (Player p : players) {
+                if (playersInBed.contains(p.getUniqueId())) {
+                    p.setStatistic(Statistic.TIME_SINCE_REST, 0);
+                }
+            }
         }
     }
 

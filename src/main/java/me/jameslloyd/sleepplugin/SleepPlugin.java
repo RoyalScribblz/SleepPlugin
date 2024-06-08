@@ -9,6 +9,6 @@ public final class SleepPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         PluginManager pluginManager = getServer().getPluginManager();
-        pluginManager.registerEvents(new PlayerBedListener(), this);
+        pluginManager.registerEvents(new PlayerBedListener(this), this);
     }
 }
